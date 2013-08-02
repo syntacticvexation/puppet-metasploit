@@ -7,5 +7,8 @@ Example
 -------
 ```ruby
 require stdlib
-class { 'metasploit': }
+class { 'metasploit': 
+  postgres_user     => 'msf',
+  postgres_password => 'drowssap'
+}
 ```

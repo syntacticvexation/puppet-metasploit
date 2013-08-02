@@ -1,16 +1,12 @@
-# Class: metasploit::postgres
+# == Class: metasploit::postgres
 #
-# This class configures a postgres DB for metasploit.
-#
-# A few metasploit setup tips:
-# - http://fedoraproject.org/wiki/Metasploit_Postgres_Setup#Configure_Metasploit
-# - http://www.darkoperator.com/installing-metasploit-in-ubunt/
+# Configures a postgres DB for metasploit.
 #
 class metasploit::postgres(
   $postgres_user,
   $postgres_password,
-  $postgres_db_name   = $metasploit::params::postgres_db_name,
-  $metasploit_path    = $metasploit::params::metasploit_path
+  $postgres_db_name,
+  $metasploit_path
 ) {
   validate_string($postgres_user, $postgres_password, $postgres_db_name, $metasploit_path)
 

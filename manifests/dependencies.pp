@@ -1,6 +1,6 @@
-# Class: metasploit::dependencies
+# == Class: metasploit::dependencies
 #
-# This class installs packages metasploit depends upon.
+# Installs packages rvm & metasploit depend upon.
 #
 class metasploit::dependencies {
   $packages = ['build-essential', 'zlib1g', 'zlib1g-dev', 'libxml2',

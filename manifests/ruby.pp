@@ -1,9 +1,6 @@
-# Class: metasploit::ruby
+# == Class: metasploit::ruby
 #
-# This class installs rvm and ruby
-#
-# Actions:
-#   - Installs rvm and ruby 1.9.3-p125
+# Installs rvm, ruby, and the bundler gem
 #
 class metasploit::ruby(
   $ruby_version

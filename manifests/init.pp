@@ -1,30 +1,40 @@
-# Class: metasploit
 #
-# This class installs metasploit and configures a postgres DB for it.
-# To load the DB in metasploit: `db_connect msf@msf`
+# == Class: metasploit
 #
-# Actions:
-#   - Installs rvm and ruby 1.9.3-p125
-#   - Installs the apt modules metasploit depends on
-#   - Installs metasploit from source and bundles it
-#   - Configures postgres
+# Installs and configures metasploit with a postgres DB.
 #
-# TODO:
+# === Parameters
+#
+# [postgres_user] Username for postgres DB. Required.
+# [postgres_password] Password for postgres DB. Required.
+# [postgres_db_name] Name of the postgres DB. Optional.  Defaults to 'msf'
+# [metasploit_path] Path to install metasploit to. Optional. Defaults to '/usr/local/metasploit'
+# [ruby_version] Version of ruby to use. Optional. Defaults to 'ruby-1.9.3-p125'
+#
+# === Actions:
+# - Installs rvm and ruby 1.9.3-p125
+# - Installs the apt modules metasploit depends on
+# - Installs metasploit from source and bundles it
+# - Configures postgres
+#
+# === TODO Actions:
 #   - A few metasploit setup tips:
 #       http://fedoraproject.org/wiki/Metasploit_Postgres_Setup#Configure_Metasploit
 #       http://www.darkoperator.com/installing-metasploit-in-ubunt/
 #
-# Sample Usage:
-#  class { 'metasploit': }
+# === Examples:
+#  class { 'metasploit':
+#    postgres_user => 'vagrant',
+#    postgres_password => 'drowssap'
+# }
 #
-#require stdlib
-
 class metasploit(
   $postgres_user,
   $postgres_password,
-  $metasploit_path = $metasploit::params::metasploit_path,
-  $ruby_version    = $metasploit::params::ruby_version
-) inherits metasploit::params {
+  $postgres_db_name   = 'msf',
+  $metasploit_path    = '/usr/local/metasploit',
+  $ruby_version       = 'ruby-1.9.3-p125'
+) {
 
   validate_string($metasploit_path, $ruby_version)
 
@@ -32,15 +42,16 @@ class metasploit(
   class { 'metasploit::dependencies': }
 
   # Install ruby and rvm
-  class { 'metasploit::ruby': 
+  class { 'metasploit::ruby':
     ruby_version => $ruby_version,
   }
 
   # Install the metasploit postgres config only after the vcsrepo has created /usr/local/metasploit
   class { 'metasploit::postgres':
-    require           => Vcsrepo[$metasploit_path],
     postgres_user     => postgres_user,
     postgres_password => postgres_password,
+    postgres_db_name  => postgres_db_name,
+    require           => Vcsrepo[$metasploit_path],
   }
 
   # Grab metasploit from github.  Note this is *very* slow as the repo is honking huge.
