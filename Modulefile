@@ -1,0 +1,13 @@
+name          'ivanlei-metasploit'
+version       '1.0.0'
+summary       'Puppet module for installing metasploit and configuring a postgres DB'
+description   'Puppet module for installing metasploit and configuring a postgres DB'
+source        'https://github.com/ivanlei/puppet-metasploit.git'
+project_page  'https://github.com/ivanlei/puppet-metasploit'
+license       'http://unlicense.org/'
+
+dependency    'puppetlabs/stdlib', '>=4.1.0'
+dependency    'ivanlei/python_pip', '>=1.0.0'
+dependency    'puppetlabs/vcsrepo', '>=0.1.2'
+dependency    'puppetlabs/postgresql', '>=2.4.0'
+dependency    'puppet/rvm', '>=1.0.0'
