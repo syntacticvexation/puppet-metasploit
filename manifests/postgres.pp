@@ -7,8 +7,8 @@
 # - http://www.darkoperator.com/installing-metasploit-in-ubunt/
 #
 class metasploit::postgres(
-  $postgres_user      = $metasploit::params::postgres_user,
-  $postgres_password  = $metasploit::params::postgres_password,
+  $postgres_user,
+  $postgres_password,
   $postgres_db_name   = $metasploit::params::postgres_db_name,
   $metasploit_path    = $metasploit::params::metasploit_path
 ) {

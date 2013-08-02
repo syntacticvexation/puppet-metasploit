@@ -9,7 +9,5 @@ class metasploit::params {
   $metasploit_path      = '/usr/local/metasploit'
   $metasploit_git_repo  = 'https://github.com/rapid7/metasploit-framework'
 
-  $postgres_user        = 'msf'
-  $postgres_password    = 'msf'
   $postgres_db_name     = 'msf'
 }

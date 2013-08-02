@@ -20,6 +20,8 @@
 #require stdlib
 
 class metasploit(
+  $postgres_user,
+  $postgres_password,
   $metasploit_path = $metasploit::params::metasploit_path,
   $ruby_version    = $metasploit::params::ruby_version
 ) inherits metasploit::params {
@@ -36,7 +38,9 @@ class metasploit(
 
   # Install the metasploit postgres config only after the vcsrepo has created /usr/local/metasploit
   class { 'metasploit::postgres':
-    require   => Vcsrepo[$metasploit_path],
+    require           => Vcsrepo[$metasploit_path],
+    postgres_user     => postgres_user,
+    postgres_password => postgres_password,
   }
 
   # Grab metasploit from github.  Note this is *very* slow as the repo is honking huge.
