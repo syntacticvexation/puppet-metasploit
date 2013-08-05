@@ -10,10 +10,24 @@ class metasploit::postgres(
 ) {
   validate_string($postgres_user, $postgres_password, $postgres_db_name, $metasploit_path)
 
+  #$run_initdb = undef
+  case $::osfamily {
+    'Darwin': {
+      $run_initdb = true
+      $service_name = 'postgresql'
+    }
+    default: {
+      $run_initdb = undef
+      $service_name = undef
+    }
+  }
+
   # Prep the basic server config
   class { 'postgresql':
     # Metasploit requires SQL_ASCII encoding for the DB
-    charset => 'sql_ascii',
+    charset       => 'sql_ascii',
+    run_initdb    => $run_initdb,
+    service_name  => $service_name
   }
 
   class { 'postgresql::server':

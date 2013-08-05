@@ -1,5 +1,12 @@
-apply = puppet apply --noop --modulepath=..
+apply = puppet apply --noop --modulepath=.. --verbose --debug
+parse = puppet parser validate
+lint = puppet-lint --no-80chars-check --with-filename
 
-test: tests/*.pp
-	find tests -name \*.pp | xargs -n 1 -t $(apply)
+test:
+	find tests/ manifests/ -name \*.pp | xargs -n 1 $(apply)
 
+parse:
+	find tests/ manifests/ -name \*.pp | xargs -n 1 $(apply)
+
+lint:
+	find tests/ manifests/ -name \*.pp | xargs -n 1 $(lint)

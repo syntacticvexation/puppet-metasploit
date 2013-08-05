@@ -7,7 +7,7 @@ class metasploit::ruby(
 ) {
   validate_string($ruby_version)
 
-  class { 'rvm': }
+  require rvm
 
   rvm_system_ruby { $ruby_version:
     ensure      => present,

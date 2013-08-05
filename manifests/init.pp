@@ -51,6 +51,7 @@ class metasploit(
     postgres_user     => postgres_user,
     postgres_password => postgres_password,
     postgres_db_name  => postgres_db_name,
+    metasploit_path   => $metasploit_path,
     require           => Vcsrepo[$metasploit_path],
   }
 
