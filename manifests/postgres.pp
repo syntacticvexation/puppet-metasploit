@@ -10,18 +10,6 @@ class metasploit::postgres(
 ) {
   validate_string($postgres_user, $postgres_password, $postgres_db_name, $metasploit_path)
 
-  #$run_initdb = undef
-  case $::osfamily {
-    'Darwin': {
-      $run_initdb = true
-      $service_name = 'postgresql'
-    }
-    default: {
-      $run_initdb = undef
-      $service_name = undef
-    }
-  }
-
   # Prep the basic server config
   class { 'postgresql':
     # Metasploit requires SQL_ASCII encoding for the DB
@@ -50,7 +38,7 @@ class metasploit::postgres(
     owner     => root,
     group     => root,
     mode      => '0400',
-    content   => template("metasploit/database.yaml.erb"),
+    content   => template('metasploit/database.yaml.erb'),
     require   => File[$metasploit_path],
   }
 }

@@ -9,10 +9,10 @@
 # [postgres_password] Password for postgres DB. Required.
 # [postgres_db_name] Name of the postgres DB. Optional.  Defaults to 'msf'
 # [metasploit_path] Path to install metasploit to. Optional. Defaults to '/usr/local/metasploit'
-# [ruby_version] Version of ruby to use. Optional. Defaults to 'ruby-1.9.3-p125'
+# [ruby_version] Version of ruby to use. Optional. Defaults to 'ruby-1.9.3-p448'
 #
 # === Actions:
-# - Installs rvm and ruby 1.9.3-p125
+# - Installs rvm and ruby 1.9.3-p448
 # - Installs the apt modules metasploit depends on
 # - Installs metasploit from source and bundles it
 # - Configures postgres
@@ -22,6 +22,7 @@
 #       http://fedoraproject.org/wiki/Metasploit_Postgres_Setup#Configure_Metasploit
 #       http://www.darkoperator.com/installing-metasploit-in-ubunt/
 #
+#   - sudo bash -c 'cd /usr/local/metasploit; for MSF in $(ls msf*); do ln -s $MSF /usr/local/bin/$MSF;done'
 # === Examples:
 #  class { 'metasploit':
 #    postgres_user => 'vagrant',
@@ -33,7 +34,7 @@ class metasploit(
   $postgres_password,
   $postgres_db_name   = 'msf',
   $metasploit_path    = '/usr/local/metasploit',
-  $ruby_version       = 'ruby-1.9.3-p125'
+  $ruby_version       = 'ruby-1.9.3-p448'
 ) {
 
   validate_string($metasploit_path, $ruby_version)

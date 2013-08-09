@@ -7,11 +7,13 @@ Vagrant.configure('2') do |global_config|
   global_config.vm.box_url = 'https://s3-us-west-1.amazonaws.com/vagaries/ubuntu-server-10044-x64-fusion503.box'
 
   vms = {
-    :awstools => {
+    'metasploit-ruby' => {
     },
-    :awstools_nouser => {
+    'metasploit-postgres' => {
     },
-    :config_files => {
+    'metasploit-dependencies' => {
+    },
+    'metasploit-metasploit' => {
     },
   }
 
@@ -38,8 +40,6 @@ Vagrant.configure('2') do |global_config|
 
       config.ssh.forward_agent  = forward_ssh
       config.vm.hostname        = vm_name
-      #config.vm.network :private_network, ip: vm_settings[:ip]
-      config.vm.synced_folder '../../..', '/vms'
 
       ###############
       # VirtualBox  #
@@ -83,7 +83,7 @@ Vagrant.configure('2') do |global_config|
       # Puppet  #
       ###########
       config.vm.provision :puppet do |puppet|
-        puppet.module_path    = '..'
+        puppet.module_path    = './modules'
         puppet.manifests_path = './tests'
         puppet.manifest_file  = "#{vm_name}.pp"
         if debug

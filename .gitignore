@@ -19,3 +19,8 @@ doc/
 
 # Mac OSX
 .DS_Store
+
+.vagrant/
+.tmp/
+modules/
+.librarian/
