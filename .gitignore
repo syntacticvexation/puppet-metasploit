@@ -24,3 +24,4 @@ doc/
 .tmp/
 modules/
 .librarian/
+Puppetfile.lock
