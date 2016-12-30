@@ -34,18 +34,13 @@ class metasploit(
   $postgres_password,
   $postgres_db_name   = 'msf',
   $metasploit_path    = '/usr/local/metasploit',
-  $ruby_version       = 'ruby-1.9.3-p448'
 ) {
 
   validate_string($metasploit_path, $ruby_version)
+  include ruby::dev
 
   # Install the required packages
   class { 'metasploit::dependencies': }
-
-  # Install ruby and rvm
-  class { 'metasploit::ruby':
-    ruby_version => $ruby_version,
-  }
 
   # Install the metasploit postgres config only after the vcsrepo has created /usr/local/metasploit
   class { 'metasploit::postgres':
@@ -61,17 +56,15 @@ class metasploit(
     ensure    => present,
     provider  => 'git',
     source    => 'https://github.com/rapid7/metasploit-framework',
-    require   => [Class['metasploit::dependencies'], Class['metasploit::ruby']],
+    require   => [Class['metasploit::dependencies'],
   }
+  
+  ->
 
-  # Once all the proper packages are installed, ruby is installed, and metasploit is slurped down,
-  # it is time to bundle metasploit.
-  exec { 'bundle_metasploit':
-    command   => "sudo /usr/local/rvm/bin/rvm ${ruby_version} do bundle install",
-    cwd       => $metasploit_path,
-    path      => ['/usr/bin', '/usr/sbin'],
-    require   => [Class['metasploit::dependencies'], Vcsrepo[$metasploit_path], Class['metasploit::ruby']],
-  }
+	ruby::bundle { 'metasploit':
+		cwd => $metasploit_path,
+		require => Vcsrepo[$metasploit_path],
+	}
 
   # TODO: I don't think this anchor is necessary as the exec effectively anchors the contained classes
   # anchor { 'metasploit::anchor': require => [Class['metasploit::postgres'], Class['metasploit::ruby']] }
