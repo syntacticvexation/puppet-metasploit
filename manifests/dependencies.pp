@@ -8,7 +8,7 @@ class metasploit::dependencies {
     'libcurl4-openssl-dev', 'git-core', 'libssl-dev', 'libyaml-dev',
     'openssl', 'autoconf', 'libtool', 'ncurses-dev', 'bison', 'curl',
     'wget', 'postgresql', 'postgresql-contrib', 'libpq-dev', 'libapr1',
-    'libaprutil1', 'libsvn1', 'libpcap-dev', 'nmap']
+    'libaprutil1', 'libsvn1', 'libpcap-dev']
 
   package { $packages:
     ensure => present,
